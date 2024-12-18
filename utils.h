@@ -23,12 +23,13 @@
 #define BOARD_X 7
 #define BOARD_Y 5
 
+//Definição do tipo quadro
 typedef struct{
-    int x;
-    int y;
-    int curSqx;
-    int curSqy;
-    int **data;
+    int x; //tamanho x
+    int y; //tamaho y
+    int curSqx; //coordenada x do quadrado atual
+    int curSqy; //coordenada y do quadrado atual
+    int **data; //dados da matriz
 } Board;
 
 void clrscr();
