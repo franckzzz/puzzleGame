@@ -1,3 +1,5 @@
+//TRABALHO 2 ALGORITMOS
+//ACADÊMICOS: MATEUS ARTUR FRANCK - GUILHERME HENRIQUE VIAPIANA SMANIOTO
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -6,48 +8,56 @@
 #include <fcntl.h>
 #include <string.h>
 
+//Definição de padrões
 #define CLEAR "\033[H\033[2J"
 #define RESET "\033[0m"
-#define BOLD "\033[1m"
-#define REVERSE "\033[7m"
-#define FG_WHITE "\033[37m"
-#define BG_BLUE "\033[44m"
 
 // Configuração para teclas
 #define KEY_ENTER 10
-#define KEY_ESC 27
 #define KEY_UP 65
 #define KEY_DOWN 66
 #define KEY_RIGHT 67
 #define KEY_LEFT 68
 
-// Comprimento máximo de uma linha do menu
-#define MENU_WIDTH 10
+//Definição das coordenadas do quadro
+#define BOARD_X 7
+#define BOARD_Y 5
+
+typedef struct{
+    int x;
+    int y;
+    int curSqx;
+    int curSqy;
+    int **data;
+} Board;
 
 void clrscr();
 
 void gotoxy(int x, int y);
 
-void window(int x1, int y1, int x2, int y2);
+void window(Board board);
 
-char getch();
-
-int keypress();
-
-void configurar_terminal(struct termios *old);
-
-void restaurar_terminal(struct termios *old);
+char getMove();
 
 void exibir_cabecalho(const char *titulo);
 
-void formatar_opcao(const char *opcao, char *saida, int largura);
+void print_board(Board board);
 
-int mostrar_menu_interativo(const char *opcoes[], int n, const char *titulo);
+void goToCurrentSquare(Board board);
 
-void print_board(int x1, int y1, int x2, int y2, int **matriz);
+void deleteCurrentSquare(Board board);
 
 int randomNumber(int x);
 
-void shuffleBoard(int **matriz);
+void swap(int *x, int *y);
+
+int moveTile(Board *board, int move);
+
+void shuffleBoard(int x, Board *board);
+
+int solvedBoard(Board board);
+
+
+
 
 
