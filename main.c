@@ -12,15 +12,21 @@
 
 int main() {
     //Definir um título padrão
-    const char *titulo1 = "Bem vindo ao 8 Puzzle!";
+    const char *titulo1 = "Bem vindo ao Puzzle Game!";
     
-    exibir_cabecalho(titulo1);
+    //Cria o vetor das dificuldades
+    const char *opcoes[] = {
+        "Fácil",
+        "Médio",
+        "Difícil"
+    };
     
     //Declarar o quadro e seus valores
     int x, y;
     Board board;
     
-    printf("Digite as dimensões do tabuleiro: ");
+    exibir_cabecalho(titulo1);
+    printf("Digite as dimensões do quadro: ");
     scanf("%d %d", &x, &y);
     getchar();
     
@@ -52,11 +58,37 @@ int main() {
     board.curSqx = x;
     board.curSqy = y;
     
+
+    //Mostra o menu da dificuldade
+    int n = sizeof(opcoes) / sizeof(opcoes[0]);
+    int diff = mostrar_menu_interativo(opcoes, n, titulo1, board);
+    char *diffChar;
+    switch(diff){
+        case 0:
+            diff = 25;
+            diffChar = "Fácil";
+            break;
+        case 1:
+            diff = 75;
+            diffChar = "Médio";
+            break;
+        case 2:
+            diff = 200;
+            diffChar = "Difícil";
+            break;
+    }
+    exibir_cabecalho(titulo1);
+    print_board(board);
+    printf("Dificuldade selecionada: %s\n", diffChar);
+    
+    printf("Para começar o jogo, pressione qualquer tecla");
+    getMove();
+    
     //Definir uma seed aleatória
     srand(time(NULL));
     
     //Bagunçar o quadro e limpar a tela;
-    shuffleBoard(100, &board);
+    shuffleBoard(diff, &board);
     clrscr();
     
     //Declarar a variável que conta as jogadas
