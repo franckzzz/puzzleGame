@@ -72,8 +72,6 @@ void window(Board board){
         printf("|");
     }
     
-   
-    gotoxy(board.x-1, board.y-1);
     printf("\033[0;0;0m");
 }
 
