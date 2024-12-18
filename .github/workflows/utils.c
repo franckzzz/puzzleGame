@@ -23,21 +23,21 @@ void gotoxy(int x, int y){
 
 void window(int x1, int y1, int x2, int y2){
     int flag;
-    y2 = y1 + y2 + 1;
-    if(x2 <= 3){
+    
+    if(x2*y2 <= 9){
         x2 = x1 + 2*x2 + 1;
         flag = 0;
-    } else if(x2 <= 10){
+    } else if(x2*y2 <= 99){
         x2 = x1 + 3*x2 + 1;
         flag = 1;
     } else {
         x2 = x1 + 4*x2 + 1;
         flag = 2;
     }
-    
+    y2 = y1 + y2 + 1;
     
     gotoxy(x1,y1);
-    printf("\033[30;107;1m");   
+    printf("\033[97;105;1m");   
     printf("+");
     
     for(int i=x1+1; i<x2; i++){
@@ -182,14 +182,15 @@ int mostrar_menu_interativo(const char *opcoes[], int n, const char *titulo) {
 
 void print_board(int x1, int y1, int x2, int y2, int **matriz){
     int flag = 0;
-    if(x2 <= 3){
+    if(x2*y2 <= 9){
         flag = 0;
-    } else if(x2 <= 10){
+    } else if(x2*y2 <= 99){
         flag = 1;
     } else {
         flag = 2;
     }
 
+    printf("\033[97;105;1m");
     for (int i = 0; i < y2; i++) {
             gotoxy(x1+1, y1+1+i);
         for (int j = 0; j < x2; j++) {
@@ -204,11 +205,14 @@ void print_board(int x1, int y1, int x2, int y2, int **matriz){
                     printf("%3d ", matriz[i][j]);
                     break;
             }
-            
+    
         }
         printf("\n");
     }
+    
+    printf(RESET);
 }
+
 
 int randomNumber(int x){
     int r;
