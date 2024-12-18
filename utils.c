@@ -25,7 +25,7 @@ void gotoxy(int x, int y){
 }
 
 //Função para criar uma janela
-void window(Board board){
+int window(Board board){
     int flag;
     
     if(board.x*board.y <= 9){
@@ -72,7 +72,8 @@ void window(Board board){
         printf("|");
     }
     
-    printf("\033[0;0;0m");
+    printf(RESET);
+    return flag;
 }
 
 //Função para detectar o caractere inserido
@@ -110,15 +111,7 @@ void exibir_cabecalho(const char *titulo) {
 
 //Função para exibir o quadro com janela
 void print_board(Board board){
-    int flag = 0;
-    if(board.x*board.y <= 9){
-        flag = 0;
-    } else if(board.x*board.y <= 99){
-        flag = 1;
-    } else {
-        flag = 2;
-    }
-    window(board);
+    int flag = window(board);
     printf("\033[97;105;1m");
     for (int i = 0; i < board.y; i++) {
             gotoxy(BOARD_X+1, BOARD_Y+1+i);
@@ -270,6 +263,63 @@ int solvedBoard(Board board){
     }
 }
 
+int mostrar_menu_interativo(const char *opcoes[], int n, const char *titulo, Board b) {
+   int selecionado = 0;
+   struct termios terminal_original;
 
+   configurar_terminal(&terminal_original);
 
+   while (1) {
+      // Exibe as opções do menu
+      exibir_cabecalho(titulo);
+      print_board(b);
+      printf("Selecione a dificuldade:\n");
+      for (int i = 0; i < n; i++) {
+         char opcao_formatada[MENU_WIDTH + 1];
+         formatar_opcao(opcoes[i], opcao_formatada, MENU_WIDTH);
 
+         if (i == selecionado) {
+            printf(PINK " %s " RESET "\n", opcao_formatada); // Destaca a opção com vídeo reverso
+         } else {
+            printf(" %s\n", opcao_formatada);
+         }
+      }
+
+      // Lê a tecla pressionada
+      int ch = getchar();
+      if (ch == '\033') { // Tecla especial (setas)
+         getchar(); // Ignora '['
+         switch (getchar()) {
+            case KEY_UP:
+               if (selecionado > 0) selecionado--;
+               break;
+            case KEY_DOWN:
+               if (selecionado < n - 1) selecionado++;
+               break;
+         }
+      } else if (ch == KEY_ENTER) {
+         break; // Sai do loop ao pressionar Enter
+      } 
+   }
+   restaurar_terminal(&terminal_original);
+   return selecionado;
+}   
+
+void formatar_opcao(const char *opcao, char *saida, int largura) {
+   int len = strlen(opcao);
+   int padding = largura - len; // Espaços para completar
+   if (padding < 0) padding = 0; // Evita valores negativos
+   snprintf(saida, largura + 1, "%s%*s", opcao, padding, ""); // Adiciona espaços ao final
+}
+
+void configurar_terminal(struct termios *old) {
+   struct termios new;
+   tcgetattr(STDIN_FILENO, old);
+   new = *old;
+   new.c_lflag &= ~(ICANON | ECHO);
+   tcsetattr(STDIN_FILENO, TCSANOW, &new);
+}
+
+void restaurar_terminal(struct termios *old) {
+   tcsetattr(STDIN_FILENO, TCSANOW, old);
+}
