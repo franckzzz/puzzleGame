@@ -33,11 +33,8 @@ int main() {
     getchar();
 
     configurar_terminal(&oldt);
-<<<<<<< HEAD
 
-=======
     
->>>>>>> 87551db4f9213146f2f5d1db9009648f41b1d0ba
     //Alocar a matriz do quadro
     board.data = (int **)malloc(y*sizeof(int *));
     if (board.data == NULL) {
