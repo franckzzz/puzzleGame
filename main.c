@@ -137,6 +137,9 @@ int main() {
         free(board.data[i]);
     }
     free(board.data);
+    void restaurar_terminal(struct termios *old){
+        tcsetattr(STDIN_FILENO, TCSANOW, old);
+    }   
     
     return 0;
 }
