@@ -31,6 +31,8 @@ int main() {
     printf("Digite as dimensões do quadro: ");
     scanf("%d %d", &x, &y);
     getchar();
+
+    configurar_terminal(&oldt);
     
     //Alocar a matriz do quadro
     board.data = (int **)malloc(y*sizeof(int *));
@@ -139,7 +141,7 @@ int main() {
         free(board.data[i]);
     }
     free(board.data);
-    configurar_terminal(&oldt);
+    
     restaurar_terminal(&oldt);
  
     
