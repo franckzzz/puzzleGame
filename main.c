@@ -139,6 +139,7 @@ int main() {
         free(board.data[i]);
     }
     free(board.data);
+    configurar_terminal(&oldt);
     restaurar_terminal(&oldt);
  
     
