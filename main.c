@@ -12,8 +12,6 @@
 
 int main() {
     struct termios oldt;
-    configurar_terminal(&oldt);
-
 
     //Definir um título padrão
     const char *titulo1 = "Bem vindo ao Puzzle Game!";
