@@ -11,6 +11,10 @@
 
 
 int main() {
+    struct termios oldt;
+    configurar_terminal(&oldt);
+
+
     //Definir um título padrão
     const char *titulo1 = "Bem vindo ao Puzzle Game!";
     
@@ -137,9 +141,8 @@ int main() {
         free(board.data[i]);
     }
     free(board.data);
-    void restaurar_terminal(struct termios *old){
-        tcsetattr(STDIN_FILENO, TCSANOW, old);
-    }   
+    restaurar_terminal(&oldt);
+ 
     
     return 0;
 }
