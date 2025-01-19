@@ -129,7 +129,7 @@ int main() {
         exibir_cabecalho("Vitória :)");
         print_board(board);
         gotoxy(1, BOARD_Y+board.y+3);
-        printf("Parabéns! Você ganhou o jogo!\nNúmero de jogadas: %d", count);
+        printf("Parabéns! Você ganhou o jogo!\nNúmero de jogadas: %d\n", count);
     }
     
     //Desaloca a matriz do quadro
