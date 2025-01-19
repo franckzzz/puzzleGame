@@ -28,7 +28,7 @@ int main() {
     Board board;
     
     exibir_cabecalho(titulo1);
-    printf("Digite as dimensões do quadro: ");
+    printf("Digite as dimensões do tabuleiro: ");
     scanf("%d %d", &x, &y);
     getchar();
 
